@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>GH</title>
+</head>
+
+<body>
+    <h1>GH Store!</h1>
+    <h2>Python Version: {{ python_version }}</h2>
+    <h2>Django Version: {{ django_version }}</h2>
+    
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        <tr>
+            <td>GH Copilot</td>
+            <td>$19.99</td>
+            <td>
+                <form action="/ghshop/process" method="post">
+                    {% csrf_token %}
+                    <select name = "shirt_quantity">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <input type="hidden" name="product_id" value="shirt"></input>
+                    <button>Buy!</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>GH Enterprise</td>
+            <td>$21.0</td>
+            <td>
+                <form action="/ghshop/process" method="post">
+                    {% csrf_token %}
+                    <select name = "sweater_quantity">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <input type="hidden" name="product_id" value="sweater"></input>
+                    <button>Buy!</button>
+                </form>
+            </td>
+        </tr>
+        <tr>
+            <td>GitHub Advanced Security</td>
+            <td>$50.0</td>
+            <td>
+                <form action="/ghshop/process" method="post">
+                    {% csrf_token %}
+                    <select name = "cup_quantity">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                    <input type="hidden" name="product_id" value="cup"></input>
+                    <button>Buy!</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
