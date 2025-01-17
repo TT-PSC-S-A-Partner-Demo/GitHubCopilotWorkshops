@@ -1,0 +1,109 @@
+[
+    {
+        "color": "black",
+        "category": "hue",
+        "type": "primary",
+        "code": {
+            "rgba": [0, 0, 0, 1],
+            "hex": "#000000"
+        }
+    },
+    {
+        "color": "white",
+        "category": "value",
+        "code": {
+            "rgba": [255, 255, 255, 1],
+            "hex": "#FFFFFF"
+        }
+    },
+    {
+        "color": "red",
+        "category": "hue",
+        "type": "primary",
+        "code": {
+            "rgba": [255, 0, 0, 1],
+            "hex": "#FF0000"
+        }
+    },
+    {
+        "color": "blue",
+        "category": "hue",
+        "type": "primary",
+        "code": {
+            "rgba": [0, 0, 255, 1],
+            "hex": "#0000FF"
+        }
+    },
+    {
+        "color": "yellow",
+        "category": "hue",
+        "type": "primary",
+        "code": {
+            "rgba": [255, 255, 0, 1],
+            "hex": "#FFFF00"
+        }
+    },
+    {
+        "color": "green",
+        "category": "hue",
+        "type": "secondary",
+        "code": {
+            "rgba": [0, 255, 0, 1],
+            "hex": "#00FF00"
+        }
+    },
+    {
+        "color": "purple",
+        "category": "hue",
+        "type": "secondary",
+        "code": {
+            "rgba": [128, 0, 128, 1],
+            "hex": "#800080"
+        }
+    },
+    {
+        "color": "orange",
+        "category": "hue",
+        "type": "secondary",
+        "code": {
+            "rgba": [255, 165, 0, 1],
+            "hex": "#FFA500"
+        }
+    },
+    {
+        "color": "pink",
+        "category": "hue",
+        "type": "tertiary",
+        "code": {
+            "rgba": [255, 192, 203, 1],
+            "hex": "#FFC0CB"
+        }
+    },
+    {
+        "color": "brown",
+        "category": "hue",
+        "type": "tertiary",
+        "code": {
+            "rgba": [165, 42, 42, 1],
+            "hex": "#A52A2A"
+        }
+    },
+    {
+        "color": "cyan",
+        "category": "hue",
+        "type": "tertiary",
+        "code": {
+            "rgba": [0, 255, 255, 1],
+            "hex": "#00FFFF"
+        }
+    },
+    {
+        "color": "magenta",
+        "category": "hue",
+        "type": "tertiary",
+        "code": {
+            "rgba": [255, 0, 255, 1],
+            "hex": "#FF00FF"
+        }
+    }
+]
