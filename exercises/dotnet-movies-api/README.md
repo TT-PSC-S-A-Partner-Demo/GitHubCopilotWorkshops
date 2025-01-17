@@ -5,242 +5,71 @@ An API, or application programming interface, is a set of rules that define how 
 
 Focus of this tutorial to write a REST API using C# .NET.
 
-## Create Web API Project
-I am using Visual Studio 2022 for Mac on an Intel MacBook Pro.
-* Select New -> App -> API project
-<figure>
-  <a href="images/001-select-template.png"><img src="images/001-select-template.png"></a>
-  <figcaption>Select API Project Template.</figcaption>
-</figure>  
-* Configure API as below, I have not configured to use HTTPS for simplicity
-<figure>
-  <a href="images/002-configure-api.png"><img src="images/002-configure-api.png"></a>
-  <figcaption>Configure API Project.</figcaption>
-</figure>  
-* Name your project, I prefer to name my API project as [AggregateName].Api and name solution as [Aggregate Name], this comes from the Domain Driven Design, for this tutorial we are creating a REST API for Movies.
-<figure>
-  <a href="images/003-name-project.png"><img src="images/003-name-project.png"></a>
-  <figcaption>Name API Project.</figcaption>
-</figure>  
-* Click the `Create` button would create the project.
-* Right click on Dependencies and update nuget packages in Solution explorer.
-* Clicking Run button would run the API and show the following
-<figure>
-  <a href="images/004-swagger-ui.png"><img src="images/004-swagger-ui.png"></a>
-  <figcaption>Movies API Swagger UI.</figcaption>
-</figure>  
+# Exercises
 
-## Cleanup API Project
-- Remove default WeatherForecast Model
-- Remove default WeatherForecastController
-- Click Add -> New File and select `Web API Controller Class`
-- Name new contoller as MoviesController
-- Click Run button to run the API and you should see Movies endpoints on Swagger UI
-- Add another controller
+### User Story 1: Creating Multiple Tables
+**As a developer, I want to create three new tables in the in-memory store so that I can store additional data related to movies, actors, and directors.**
 
-## Add HealthChecks
-Here is an excellent [article](Adding health checks with Liveness, Readiness, and Startup probes) on Liveness, Readiness and Startup health checks in ASP.NET Core.
+#### Exercise:
+1. Create new classes `Actor`, `Director`, and `MovieActor` in the `Domain` folder with appropriate properties.
+2. Create new classes `CreateActorParams`, `CreateDirectorParams`, and `CreateMovieActorParams` in the `Store` folder with appropriate properties.
+3. Update the `InMemoryMoviesStore` to include new dictionaries for storing actors, directors, and movie-actor relationships.
+4. Implement methods in `IMoviesStore` for adding, retrieving, updating, and deleting actors, directors, and movie-actor relationships.
 
-Lets add a health check to our service.
+### User Story 2: Creating New Endpoints
+**As a developer, I want to create new endpoints for managing actors, directors, and movie-actor relationships so that I can perform CRUD operations on these entities.**
 
-- Register health check services
-```csharp
-builder.Services.AddHealthChecks();
-```
-- Map health checks endpoints
-```csharp
-app.MapHealthChecks("/healthz");
-```
-After running and going to this endpoint browser should show OK.  
-We can later improve on it and add health checks for dependent services e.g. database, redis, downstream services etc.
+#### Exercise:
+1. Create new controllers `ActorsController`, `DirectorsController`, and `MovieActorsController` in the `Controllers` folder.
+2. Implement endpoints for `GET`, `POST`, `PUT`, and `DELETE` operations for actors, directors, and movie-actor relationships.
+3. Use the `IMoviesStore` methods for handling the requests.
 
-## Solution/Project Organisation
-There are 2 options for project organisation.
-1. Keep all code in the same project and organise using the folders.
-2. Create a class library project for each logical unit e.g. Domain, Data Storage, Services etc.
-Objective of this is to keep related things together and help your future self and other team memebers to know where things are. For the purpose of this tutorial I will go with option 1 and keep all code in single project.
+### User Story 3: Writing Unit Tests
+**As a developer, I want to write unit tests for the new controllers so that I can ensure the endpoints work correctly.**
 
-## Implement CRUD operations
+#### Exercise:
+1. Create a new test project in the solution.
+2. Add a reference to the `Movies.Api` project.
+3. Write unit tests for the `ActorsController`, `DirectorsController`, and `MovieActorsController` methods using a mocking framework like Moq.
+4. Ensure the tests cover all possible scenarios, including success and failure cases.
 
-### Add Domain Model
-Lets start off by adding the domain model for our REST API.  This is not a representative of a real world but rather an example to cover few different types of fields in the model. Lets add a new folder named `Domain` in `Movies.Api` project and add a class named `Movie.cs`. It looks like following
-```csharp
-public class Movie
-{
-    public Guid Id { get; }
-    public string Title { get; }
-    public string Director { get; }
-    public decimal TicketPrice { get; }
-    public DateTime ReleaseDate { get; }
-}
-```
-### Define supported API Operations
-Lets also define the endpoints and operations that we are going to support in this API.
-- `GET /api/movies` - Return all movies (in a production environment always implement pagging for this operation)
-- `GET /api/movies/{id}` - Return a single movie by id in path parameter
-- `POST /api/movies` - Create a new movie
-- `PUT /api/movies/{id}` - Update a movie identified by id in path parameter
-- `DELETE /api/movies/{id}` - Delete a movie by id in path parameter
+### User Story 4: Using Regular Expressions
+**As a developer, I want to validate movie titles, actor names, and director names using regular expressions so that I can ensure they follow a specific format.**
 
-### Store
-This is a very simple CRUD API if there are more complex operations or business logic involved we would add another `Services` layer between `Controller` and `Store`. But adding just a storage layer is enough for the purpose of this tutorial.
+#### Exercise:
+1. Update the `CreateMovieRequest`, `CreateActorRequest`, and `CreateDirectorRequest` classes to include validation attributes for the `Title`, `Name`, and `Name` properties respectively.
+2. Use regular expressions to ensure the title starts with an uppercase letter and is followed by lowercase letters, and names contain only alphabetic characters.
+3. Update the controllers to return a `BadRequest` response if the validation fails.
 
-Lets add another folder named `Store` and add an interface named `IMoviesStore` to perform CRUD operations that we need to support funcationality exposed by REST endpoints. This would look like following
-```csharp
-public interface IMoviesStore
-{
-    IEnumerable<Movie> GetAll();
-    Movie GetByID(Guid id);
-    void Create(CreateMovieParams createMovieParams);
-    void Update(Guid id, UpdateMovieParams updateMovieParams);
-    void Delete(Guid id);
-}
-```
-I also like to add models/classes that would be used by Store, it is not really following DRY but IMO it makes this layer independent of any other layers in the project and any layer above this store can convert to/from models needed/returned by this layer.
+### User Story 5: Adding a New Health Check
+**As a developer, I want to add a new health check for the in-memory store so that I can monitor its status.**
 
-#### InMemoryStore
-To get this API working quickly lets add an InMemoryStore named `InMemoryMoviesStore` under `Store\InMemory` folder implementing the interface. We would use a dictionary to store the values. Other options are
-* Concurrent Dictionay for thread safe storage
-* Redis/Memcached for distributed memory caching
+#### Exercise:
+1. Create a new health check class `InMemoryStoreHealthCheck` that implements `IHealthCheck`.
+2. Implement the `CheckHealthAsync` method to verify the status of the in-memory store.
+3. Register the health check in the `Program.cs` file.
+4. Update the `README.md` file with instructions on how to add custom health checks.
 
-Register the newly created service in Dependency Injection in `Program.cs`
-```csharp
-builder.Services.AddSingleton<IMoviesStore, InMemoryMoviesStore>();
-```
+### User Story 6: Writing a Complex SQL Query
+**As a developer, I want to write a complex SQL query that joins the movies, actors, and directors tables so that I can retrieve detailed information about movies and their associated actors and directors.**
 
-### Implement REST operations
-Now the next step is to use the `IMoviesStore` in the controller and implement the endpoints for the users of the API.
-Lets start by adding a variable and a constructor to set that variable, ASP.NET's dependency injection would create an instance of the store and pass to its constructor so we don't need to worry about that.
-```csharp
-    private readonly IMoviesStore moviesStore;
+#### Exercise:
+1. Base on Domain package generate sql script which recreates entire database.
+2. Create sql query which get all Actors which plays with plays in movie directed by certain directors
+3. Create sql query which counts how many times actor cooperates with all movie directors
 
-    public MoviesController(IMoviesStore moviesStore)
-    {
-        this.moviesStore = moviesStore;
-    }
-```
+#### User Story 7: Creating Infrastructure in Azure Cloud with Copilot
+As a developer, I want to use GitHub Copilot to create infrastructure in Azure Cloud so that I can automate the deployment of resources.
 
-#### Get All `GET /api/movies`
-Lets implement Get All endpoint `GET /movies`, first get a list of movies from store that would be of type `Store.Movie`, since we are returning `Domain.Movie`, we would need to convert to `Domain.Movie` type, I have implemented a constructor in `Domain.Movie` class that takes `Store.Movie` object as input and sets all the fields. This can be automated using [AutoMapper](https://automapper.org/) or [Boxed.Mapping](https://www.nuget.org/packages/Boxed.Mapping/). I have also added attributes to generate Swagger for the endpoints.
-```csharp
-    [HttpGet]
-    [Produces("application/json")]
-    [ProducesResponseType(typeof(IEnumerable<Domain.Movie>), StatusCodes.Status200OK)]
-    public IActionResult Get()
-    {
-        var movies = moviesStore.GetAll().Select(x => new Domain.Movie(x));
-        return Ok(movies);
-    }
-```
+#### Exercise:
+Create a Bicep template to define the infrastructure resources.
+Use GitHub Copilot to assist in writing the Bicep for creating a virtual network, a subnet, app service and storage account.
 
-#### Get By Id `GET /api/movies/{id}`
-In GetById endpoint we will try to get a movie from store, if the method returned `null` we would return HTTP status code `404 NotFound` to the caller of the API, if found we would convert the result to `Domain.Movie` and return it with `200 OK`.
-```csharp
-    [HttpGet("{id}")]
-    [Produces("application/json")]
-    [ProducesResponseType(typeof(Domain.Movie), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(Domain.Movie), StatusCodes.Status404NotFound)]
-    public IActionResult Get(Guid id)
-    {
-        var movie = moviesStore.GetById(id);
-        if (movie == null)
-        {
-            return NotFound();
-        }
+Update the README.md file with instructions on how to use GitHub Copilot to create and deploy the Bicep template.
+Place bicep template in the azure-infrastructure folder.
 
-        return Ok(new Domain.Movie(movie));
-    }
-```
+#### User Story 8: Deploying cloud infrastructure
+As a developer, I want to deploy infrastructure and the code using CICD pipelines
 
-#### Create Movie `POST /api/movies/{id}`
-For create movie, we would receive some data from the API caller, I like to add a model for request that only contain data that we are expecting from the caller. It also helps to apply Validation attributes only on the model that is being used in the controller. Once we have received the data we can convert it to store's `CreateMovieParams` and call method to store the resource. Following is the code for handler after the update
-```csharp
-    [HttpPost]
-    [Consumes(typeof(CreateMovieRequest), "application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status409Conflict)]
-    public IActionResult Post([FromBody] CreateMovieRequest request)
-    {
-        try
-        {
-            moviesStore.Create(new CreateMovieParams(
-                request.Id,
-                request.Title,
-                request.Director,
-                request.TicketPrice,
-                request.ReleaseDate
-                ));
-        }
-        catch (DuplicateKeyException)
-        {
-            return Conflict();
-        }
-
-        return Ok();
-    }
-```
-Again you can use AutoMapper to map request to `CreateMovieParams`. Also I have used a custom exception `DuplicateKeyException` to identify if it was a duplicate record. If we use database we should tranlate sql driver exception to this exception to keep our controller code idenpendent of the underlaying storage being used.
-
-#### Update Movie `PUT /api/movies/{id}`
-Same as create, we would receive some data from API caller, I have added another class to get update request data. Once we receive the request we call store's `Update` method to update movie. Following is the code for handler after the update
-```csharp
-    [HttpPut("{id}")]
-    [Consumes(typeof(UpdateMovieRequest), "application/json")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult Put(Guid id, [FromBody] UpdateMovieRequest request)
-    {
-        try
-        {
-            moviesStore.Update(id, new UpdateMovieParams(
-                request.Title,
-                request.Director,
-                request.TicketPrice,
-                request.ReleaseDate
-                ));
-        }
-        catch (RecordNotFoundException)
-        {
-            return NotFound();
-        }
-
-        return Ok();
-    }
-```
-
-#### Delete Movie `DELETE /api/movies/{id}`
-Final operation supported by our REST API, delete movie. We simply call the `Delete` method on our store and return `NotFound` if record is not found or `OK` if deletion is successful.
-```csharp
-    [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult Delete(Guid id)
-    {
-        try
-        {
-            moviesStore.Delete(id);
-        }
-        catch (RecordNotFoundException)
-        {
-            return NotFound();
-        }
-
-        return Ok();
-    }
-```
-
-## Test
-I am not adding any unit or integration tests for this tutorial, perhaps a following tutorial. But all the endpoints can be tested either by the Swagger UI by running the application or using Postman.
-
-## Source
-Source code for the demo application is hosted on GitHub in [dotnet-movies-api](https://github.com/kashif-code-samples/dotnet-movies-api) repository.
-
-## References
-In no particular order
-* [What is a REST API?](https://www.ibm.com/topics/rest-apis)
-* [Adding health checks with Liveness, Readiness, and Startup probes](https://andrewlock.net/deploying-asp-net-core-applications-to-kubernetes-part-6-adding-health-checks-with-liveness-readiness-and-startup-probes/)
-* [Health checks in ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/host-and-deploy/health-checks?view=aspnetcore-7.0)
-* [AutoMapper](https://automapper.org/)
-* [Boxed.Mapping](https://www.nuget.org/packages/Boxed.Mapping/)
-* [A Simple and Fast Object Mapper](https://rehansaeed.com/a-simple-and-fast-object-mapper/)
-* And many more
+#### Exercise:
+Write pipeline which deploys bicep infrastructure and code to app service.
