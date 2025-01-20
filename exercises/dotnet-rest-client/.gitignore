@@ -10,10 +10,7 @@ obj/
 
 # Ignore Visual Studio Code settings
 .vscode/
-
-# Ignore Visual Studio settings
-vs/
-
+.vs/
 
 # Ignore Rider settings
 .idea/
