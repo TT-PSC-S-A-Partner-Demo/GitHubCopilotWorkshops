@@ -14,9 +14,6 @@ Let's start copiloting!!!
 4. Install Java sdk suggested by IntelliJ Idea  (Oracle OpenJDK 20)
 5. Go to File/Settings  and then select Plugins. Install GH copilot plugin, restart IDE and login
 
-
-
-
 ## Exercises
 
 ### 1. Create the code to handle a simple GET request
@@ -77,12 +74,84 @@ Given the path of a file and count the number of occurrence of a provided word. 
 
 Create a zip file with the content of a given folder. The path of the folder should be a query parameter.
 
+### 11. Password Generator
 
+Create an endpoint that generates secure passwords. Accept parameters for length, include uppercase, lowercase, numbers, and special characters. Use Copilot to suggest secure random generation methods.
 
+### 12. Email Validation and Domain Extraction
 
+Validate email addresses using regex patterns and extract the domain. Return both validation status and domain information in JSON format.
 
+### 13. JWT Token Operations
 
+Create endpoints to generate and validate JWT tokens. Use Copilot to implement secure token generation with proper claims and expiration handling.
 
+### 14. File Encryption/Decryption
 
+Implement basic file encryption and decryption using AES. Accept file path and password as parameters. Use Copilot to suggest secure crypto implementations.
 
+### 15. Database CRUD Operations
 
+Create a simple entity (e.g., User) with JPA annotations and implement full CRUD operations. Use Copilot to generate repository methods and service layer.
+
+### 16. API Rate Limiting
+
+Implement rate limiting for your endpoints using annotations. Use Copilot to suggest rate limiting strategies and implementation patterns.
+
+### 17. Data Validation with Custom Annotations
+
+Create custom validation annotations for business rules (e.g., valid IBAN, credit card numbers). Use Copilot to generate validation logic.
+
+### 18. Caching Implementation
+
+Add caching to expensive operations using Spring Cache. Use Copilot to suggest appropriate caching strategies and annotations.
+
+### 19. Error Handling and Global Exception Handler
+
+Implement a global exception handler with custom error responses. Use Copilot to create comprehensive error handling patterns.
+
+### 20. Async Processing
+
+Create endpoints that handle long-running operations asynchronously. Use Copilot to implement proper async patterns with CompletableFuture.
+
+### 21. Health Check Endpoints
+
+Implement custom health check endpoints that verify database connectivity, external service availability, and system resources.
+
+### 22. API Documentation with OpenAPI
+
+Use Copilot to generate OpenAPI annotations and documentation for all your endpoints. Create comprehensive API documentation.
+
+### 23. Integration Testing
+
+Create integration tests that test the full request-response cycle. Use Copilot to generate test scenarios and mock external dependencies.
+
+### 24. Performance Monitoring
+
+Add performance monitoring and metrics collection to your endpoints. Use Copilot to implement timing and performance tracking.
+
+### 25. Security Implementation
+
+Implement basic authentication and authorization. Use Copilot to create secure endpoints with proper security configurations.
+
+## Bonus Challenges
+
+### 26. Refactoring Exercise
+
+Take one of your existing endpoints and ask Copilot to refactor it following SOLID principles and clean code practices.
+
+### 27. Code Review Assistant
+
+Use Copilot Chat to review your code and suggest improvements for security, performance, and maintainability.
+
+### 28. Documentation Generation
+
+Use Copilot to generate comprehensive README files, API documentation, and inline code comments for your project.
+
+### 29. Testing Strategy
+
+Ask Copilot to suggest and implement different testing strategies including unit tests, integration tests, and edge case testing.
+
+### 30. Deployment Configuration
+
+Use Copilot to generate Docker files, deployment scripts, and CI/CD pipeline configurations for your Spring Boot application.
