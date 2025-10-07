@@ -51,7 +51,7 @@ src/
 - ✅ **Phase 3**: MovieList Component
 - ✅ **Phase 4**: MovieDetail Component  
 - ✅ **Phase 5**: useMovies Hook
-- ⏳ **Phase 6**: AddMovieForm Component
+- ✅ **Phase 6**: AddMovieForm Component
 - ⏳ **Phase 7**: Search & Sort Features
 - ⏳ **Phase 8**: Final Integration
 

@@ -2,22 +2,22 @@
 // Main App component for Module 1: React Basics
 // Podstawowy komponent aplikacji do zarządzania filmami
 import { useState } from 'react';
-import { Movie } from '@/types/Movie';
-import { MovieList } from '@/components/MovieList';
-import { MovieDetail } from '@/components/MovieDetail';
+import { Movie, CreateMovieData } from '@/types/Movie';
+import { MovieList, MovieDetail, AddMovieForm } from '@/components';
 import { useMovies } from '@/hooks';
 
 function App() {
   // Stan wybranego filmu i widoku
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [currentView, setCurrentView] = useState<'list' | 'detail'>('list');
+  const [currentView, setCurrentView] = useState<'list' | 'detail' | 'add'>('list');
 
   // Użycie custom hook do zarządzania filmami
   const { 
     movies, 
     loading, 
     error, 
-    refreshMovies 
+    refreshMovies,
+    addMovie 
   } = useMovies();
 
   // Funkcja obsługi kliknięcia w film
@@ -32,19 +32,42 @@ function App() {
     setSelectedMovie(null);
   };
 
+  // Funkcja przejścia do formularza dodawania filmu
+  const handleShowAddForm = () => {
+    setCurrentView('add');
+    setSelectedMovie(null);
+  };
+
+  // Funkcja obsługi dodawania nowego filmu
+  const handleAddMovie = async (movieData: CreateMovieData) => {
+    await addMovie(movieData);
+    setCurrentView('list'); // Powrót do listy po dodaniu
+  };
+
   return (
     <div className="app">
       <header className="app-header">
         <h1>🎬 Movie Management App</h1>
         <p>Module 1: React Basics with GitHub Copilot</p>
-        {currentView === 'detail' && selectedMovie && (
-          <button 
-            className="back-button"
-            onClick={handleBackToList}
-          >
-            ← Powrót do listy filmów
-          </button>
-        )}
+        
+        <nav className="app-navigation">
+          {currentView === 'list' ? (
+            <button 
+              className="add-movie-button"
+              onClick={handleShowAddForm}
+              disabled={loading}
+            >
+              ➕ Dodaj nowy film
+            </button>
+          ) : (
+            <button 
+              className="back-button"
+              onClick={handleBackToList}
+            >
+              ← Powrót do listy filmów
+            </button>
+          )}
+        </nav>
       </header>
       
       <main className="app-main">
@@ -73,11 +96,19 @@ function App() {
               />
             )}
           </section>
-        ) : (
+        ) : currentView === 'detail' ? (
           <section className="movie-detail-section">
             <MovieDetail movie={selectedMovie} />
           </section>
-        )}
+        ) : currentView === 'add' ? (
+          <section className="add-movie-section">
+            <AddMovieForm 
+              onSubmit={handleAddMovie}
+              onCancel={handleBackToList}
+              isLoading={loading}
+            />
+          </section>
+        ) : null}
       </main>
     </div>
   );
