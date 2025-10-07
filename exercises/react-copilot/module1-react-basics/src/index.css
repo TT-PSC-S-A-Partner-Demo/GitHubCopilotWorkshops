@@ -120,6 +120,54 @@ body {
   font-weight: bold;
 }
 
+.phase-info {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.phase-info h4 {
+  color: #27ae60;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.phase-info ul {
+  margin-left: 15px;
+}
+
+.phase-info li {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Back Button */
+.back-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Movie Detail Section */
+.movie-detail-section {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .app {

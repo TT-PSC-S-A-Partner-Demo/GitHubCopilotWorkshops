@@ -11,6 +11,7 @@ export interface Movie {
 // Props interfaces for React components handling movie data
 export interface MovieListProps {
   movies: Movie[];
+  onMovieClick?: (movie: Movie) => void;
 }
 
 export interface MovieDetailProps {
