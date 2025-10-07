@@ -50,6 +50,11 @@ interface UpdateMovieRequest {
 }
 ```
 
+## Session Activities
+
+For a detailed breakdown of workshop sessions with specific activities, goals, and achievements, see:
+📋 **[SESSION-ACTIVITIES.md](./SESSION-ACTIVITIES.md)** - Complete session-by-session guide with time allocations and deliverables
+
 ## Learning Path
 
 Warsztat składa się z pięciu modułów o narastającym poziomie złożoności:
