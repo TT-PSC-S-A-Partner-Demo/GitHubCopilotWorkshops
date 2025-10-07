@@ -3,6 +3,11 @@
 ## Workshop Overview
 This workshop provides a comprehensive training program designed to equip DevOps engineers with advanced skills in leveraging GitHub Copilot to optimize daily tasks, increase productivity, and accelerate infrastructure and automation development. GitHub Copilot has evolved beyond a simple code completion tool into an intelligent partner throughout the entire DevOps lifecycle.
 
+## Session Activities
+
+For a detailed breakdown of workshop sessions with specific activities, goals, and achievements, see:
+📋 **[SESSION-ACTIVITIES.md](./SESSION-ACTIVITIES.md)** - Complete session-by-session guide with time allocations and deliverables
+
 ## Learning Path
 
 This workshop is organized into five modules of increasing complexity:

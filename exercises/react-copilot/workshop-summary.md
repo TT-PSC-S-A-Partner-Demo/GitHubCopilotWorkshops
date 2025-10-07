@@ -3,6 +3,10 @@
 ## 🎯 Workshop Overview
 Kompletny workshop zaprojektowany dla React developers do nauki efektywnego wykorzystania GitHub Copilot w praktycznych projektach. Workshop opiera się na **Movies API** i prowadzi przez realistic scenarios - od basic components po advanced architectural patterns.
 
+### 📋 Structured Session Activities
+For detailed session-by-session breakdown with specific activities, goals, and achievements, see:
+**[SESSION-ACTIVITIES.md](./SESSION-ACTIVITIES.md)** - Complete 19-hour workshop plan with 5 structured sessions
+
 ## 📋 API Specification
 
 ### Movies API Endpoints
