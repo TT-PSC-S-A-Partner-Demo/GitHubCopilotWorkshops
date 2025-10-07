@@ -1,5 +1,7 @@
 # Merge Sort Exercise
 
+> **📚 Solution Available**: A complete solution with detailed explanation is available in [SOLUTIONS.md](../../../../../SOLUTIONS.md#sorting-exercise---merge-sort-bug-fix)
+
 ## Objective
 
 In this exercise, you will work with an implementation of the Merge Sort algorithm. The provided code contains a deliberate mistake in the merging function that affects the sorting of the array. Your tasks are to identify and fix the mistake using GitHub Copilot and to write additional tests to ensure the correctness of the implementation.
