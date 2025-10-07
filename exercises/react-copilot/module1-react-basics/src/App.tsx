@@ -3,13 +3,17 @@
 // Podstawowy komponent aplikacji do zarządzania filmami
 import { useState } from 'react';
 import { Movie, CreateMovieData } from '@/types/Movie';
-import { MovieList, MovieDetail, AddMovieForm } from '@/components';
+import { MovieList, MovieDetail, AddMovieForm, MovieSearch, SearchAndSortOptions } from '@/components';
 import { useMovies } from '@/hooks';
 
 function App() {
   // Stan wybranego filmu i widoku
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
   const [currentView, setCurrentView] = useState<'list' | 'detail' | 'add'>('list');
+  
+  // Stan dla przefiltrowanych filmów
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
+  const [searchOptions, setSearchOptions] = useState<SearchAndSortOptions | null>(null);
 
   // Użycie custom hook do zarządzania filmami
   const { 
@@ -43,6 +47,20 @@ function App() {
     await addMovie(movieData);
     setCurrentView('list'); // Powrót do listy po dodaniu
   };
+
+  // Funkcje obsługi wyszukiwania i filtrowania
+  const handleFilteredMoviesChange = (filtered: Movie[]) => {
+    setFilteredMovies(filtered);
+  };
+
+  const handleSearchOptionsChange = (options: SearchAndSortOptions) => {
+    setSearchOptions(options);
+  };
+
+  // Określenie, które filmy wyświetlić
+  const moviesToDisplay = filteredMovies.length > 0 || searchOptions?.searchQuery 
+    ? filteredMovies 
+    : movies;
 
   return (
     <div className="app">
@@ -90,10 +108,17 @@ function App() {
                 </button>
               </div>
             ) : (
-              <MovieList 
-                movies={movies}
-                onMovieClick={handleMovieClick}
-              />
+              <>
+                <MovieSearch
+                  movies={movies}
+                  onFilteredMoviesChange={handleFilteredMoviesChange}
+                  onOptionsChange={handleSearchOptionsChange}
+                />
+                <MovieList 
+                  movies={moviesToDisplay}
+                  onMovieClick={handleMovieClick}
+                />
+              </>
             )}
           </section>
         ) : currentView === 'detail' ? (
